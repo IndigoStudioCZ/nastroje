@@ -1,0 +1,63 @@
+name = "nastroje"
+main = "src/worker.js"
+compatibility_date = "2025-04-01"
+
+# Worker žije jen na vlastních doménách níže, adresu na workers.dev nepotřebuje.
+workers_dev = false
+
+# ----- Domény -----
+# Přehled, každý nástroj i rozcestník mají vlastní subdoménu; custom_domain vytvoří
+# DNS záznam i certifikát. Seznam musí odpovídat src/tools-data.js (hlídá npm run check).
+routes = [
+  { pattern = "nastroje.indigostudio.cz", custom_domain = true },
+  { pattern = "kalkulacka.indigostudio.cz", custom_domain = true },
+  { pattern = "procenta.indigostudio.cz", custom_domain = true },
+  { pattern = "trojclenka.indigostudio.cz", custom_domain = true },
+  { pattern = "dph.indigostudio.cz", custom_domain = true },
+  { pattern = "spropitne.indigostudio.cz", custom_domain = true },
+  { pattern = "prevody-jednotek.indigostudio.cz", custom_domain = true },
+  { pattern = "prevody-men.indigostudio.cz", custom_domain = true },
+  { pattern = "casova-pasma.indigostudio.cz", custom_domain = true },
+  { pattern = "velikosti-obleceni.indigostudio.cz", custom_domain = true },
+  { pattern = "cista-mzda.indigostudio.cz", custom_domain = true },
+  { pattern = "hodinova-sazba.indigostudio.cz", custom_domain = true },
+  { pattern = "fakturace.indigostudio.cz", custom_domain = true },
+  { pattern = "uroky.indigostudio.cz", custom_domain = true },
+  { pattern = "splatky.indigostudio.cz", custom_domain = true },
+  { pattern = "kalendar.indigostudio.cz", custom_domain = true },
+  { pattern = "datum.indigostudio.cz", custom_domain = true },
+  { pattern = "pracovni-dny.indigostudio.cz", custom_domain = true },
+  { pattern = "odpocet.indigostudio.cz", custom_domain = true },
+  { pattern = "stopky.indigostudio.cz", custom_domain = true },
+  { pattern = "casovac.indigostudio.cz", custom_domain = true },
+  { pattern = "pocitadlo-slov.indigostudio.cz", custom_domain = true },
+  { pattern = "formatovani-textu.indigostudio.cz", custom_domain = true },
+  { pattern = "qr-kod.indigostudio.cz", custom_domain = true },
+  { pattern = "generator-hesel.indigostudio.cz", custom_domain = true },
+  { pattern = "barvy.indigostudio.cz", custom_domain = true },
+  { pattern = "kontrast.indigostudio.cz", custom_domain = true },
+  { pattern = "rozmery-obrazku.indigostudio.cz", custom_domain = true },
+  { pattern = "komprese-obrazku.indigostudio.cz", custom_domain = true },
+  { pattern = "metadata.indigostudio.cz", custom_domain = true },
+  { pattern = "exif.indigostudio.cz", custom_domain = true },
+  { pattern = "upravy-obrazku.indigostudio.cz", custom_domain = true },
+  { pattern = "prevod-formatu.indigostudio.cz", custom_domain = true },
+  { pattern = "prohlizec.indigostudio.cz", custom_domain = true },
+  { pattern = "bluetooth.indigostudio.cz", custom_domain = true },
+  { pattern = "klakson.indigostudio.cz", custom_domain = true },
+  { pattern = "ceska-republika.indigostudio.cz", custom_domain = true },
+]
+
+# Stránky se do Workeru importují jako text (src/*.page.html).
+[[rules]]
+type = "Text"
+globs = ["**/*.page.html"]
+fallthrough = true
+
+# ----- Statika -----
+# run_worker_first = true → Worker běží i pro statiku, aby pustil jen povolené soubory
+# a doplnil bezpečnostní hlavičky.
+[assets]
+directory = "public"
+binding = "ASSETS"
+run_worker_first = true

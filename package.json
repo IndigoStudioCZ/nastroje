@@ -1,0 +1,16 @@
+{
+  "name": "nastroje",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free online tools by Indigo Studio, each on its own subdomain, served by one Cloudflare Worker",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "check": "node scripts/check.mjs",
+    "deploy": "wrangler deploy",
+    "og": "node scripts/generate-tool-og.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.145.0"
+  }
+}
