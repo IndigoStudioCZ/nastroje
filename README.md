@@ -89,6 +89,16 @@ npm run check                                           # what CI runs before ev
 4. **`npm run og`:** generate the share image `public/tools/og/<slug>.png`. It needs `rsvg-convert` (on macOS `brew install librsvg`).
 5. **`npm run check`**, then open a pull request. The deploy creates the DNS record and the certificate for the new subdomain.
 
+## Notes for maintainers
+
+- **Čistá mzda** (net salary) covers a standard employment contract in the Czech Republic for 2026. Check the rates and thresholds in `public/tools/app.js` before the next year.
+- **Převody měn** shows the date of the ECB reference rates it used. The ECB publishes them on working days.
+- **EXIF fotografií** reads and writes JPEG metadata without libraries ([`public/tools/exif.js`](public/tools/exif.js)) and copies the manufacturer's MakerNote unchanged.
+- **Bluetooth** relies on Web Bluetooth, which only Chrome and Edge support. The overview allows it in the preview with `allow="bluetooth"`.
+- **Layout** follows the width of `.tool` through container queries, not the window, so short fields stay in columns even in a narrow card. Each preview reports its height to the overview with `postMessage`, so the cards grow without scrollbars.
+- **The rail** on the right of the overview has a dot for every card (`renderToolNav` in the Worker). Cards have anchors by slug, for example `#klakson`.
+- **Česká republika:** after you edit the links in [`src/ceska-republika-data.js`](src/ceska-republika-data.js), check that the target addresses still work.
+
 ## Deployment
 
 [GitHub Actions](.github/workflows/ci.yml) runs on every push and pull request:
