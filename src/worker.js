@@ -23,7 +23,7 @@ const DIRECTORY_HOST = "ceska-republika.indigostudio.cz";
 const CATALOG_URL = "https://nastroje.indigostudio.cz/";
 
 // Statika, kterou smí načíst každá subdoména; ostatní soubory z public/ patří jen své stránce.
-const SHARED_ASSETS = ["/favicon.svg", "/apple-touch-icon.png"];
+const SHARED_ASSETS = ["/favicon.svg", "/apple-touch-icon.png", "/logo-mark.svg"];
 const SHARED_PREFIXES = ["/tools/fonts/", "/tools/og/"];
 const TOOL_ASSETS = ["/tools/app.js", "/tools/style.css", "/tools/qr.js", "/tools/exif.js", "/tools/js-yaml.js", ...SHARED_ASSETS];
 const DIRECTORY_ASSETS = ["/ceska-republika/style.css", "/ceska-republika/app.js", ...SHARED_ASSETS];

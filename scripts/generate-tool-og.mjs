@@ -1,6 +1,6 @@
 // Přegeneruje obrázky pro sdílení po změně názvů nebo popisů nástrojů.
 // Vyžaduje systémový rsvg-convert; není součástí nasazení Workeru.
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { TOOLS, TOOL_CATALOG } from "../src/tools-data.js";
@@ -16,7 +16,14 @@ const palettes = [
 const names = new Map(TOOLS.map(([slug, title, description]) => [slug, { title, description }]));
 names.set("nastroje", { title: "Online nástroje", description: "Praktické nástroje Indigo Studio na jednom místě." });
 names.set("ceska-republika", { title: "Česká republika", description: "Úřady, pojišťovny, doprava i zábava na jednom místě." });
-const entries = [["nastroje", "Přehled nástrojů", ["#1b2435", "#a8b8f1"]]];
+// Přehled nese barvu značky: Indigo #2A018A, akcent světlejší Indigo z tmavé varianty loga.
+const entries = [["nastroje", "Přehled nástrojů", ["#2a018a", "#b899ff"]]];
+// Značka Indigo Studio (srdce s korunou) z public/logo-mark.svg
+const markSvg = readFileSync(new URL("../public/logo-mark.svg", import.meta.url), "utf8");
+const markBox = markSvg.match(/viewBox="([^"]+)"/)[1].split(" ").map(Number);
+const markPath = markSvg.match(/ d="([^"]+)"/)[1];
+const markScale = 34 / markBox[3];
+// Značka a „Studio" vždy ve světlejší Indigo (tmavá varianta loga), skupiny mají vlastní akcent.
 TOOL_CATALOG.forEach(([group, slugs], index) => slugs.forEach(slug => entries.push([slug, group, palettes[index]])));
 
 const xml = text => String(text).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[char]);
@@ -42,8 +49,8 @@ for (const [slug, group, [background, accent]] of entries) {
     <circle cx="1062" cy="128" r="184" fill="none" stroke="${accent}" stroke-opacity=".17" stroke-width="2"/>
     <circle cx="1062" cy="128" r="122" fill="none" stroke="${accent}" stroke-opacity=".28" stroke-width="2"/>
     <path d="M892 242h194M986 48v194" stroke="${accent}" stroke-opacity=".32" stroke-width="2"/>
-    <rect x="82" y="67" width="28" height="28" rx="6" transform="rotate(-12 96 81)" fill="${accent}"/>
-    <text x="130" y="89" fill="#f7f7f6" font-family="Arial,sans-serif" font-size="26" font-weight="700">Indigo<tspan font-weight="400">Studio</tspan></text>
+    <path transform="translate(${(82 - markBox[0] * markScale).toFixed(2)} ${(62 - markBox[1] * markScale).toFixed(2)}) scale(${markScale.toFixed(5)})" fill="#b899ff" d="${markPath}"/>
+    <text x="124" y="89" fill="#f7f7f6" font-family="Arial,sans-serif" font-size="26" font-weight="700">Indigo <tspan fill="#b899ff">Studio</tspan></text>
     <text x="82" y="169" fill="${accent}" font-family="Arial,sans-serif" font-size="23" font-weight="700" letter-spacing="1.3">${xml(group.toLocaleUpperCase("cs-CZ"))}</text>
     <text fill="#fffdf8" font-family="Georgia,serif" font-size="${headlineSize}" font-weight="700">${headline}</text>
     <text fill="#d7dce3" font-family="Arial,sans-serif" font-size="31">${summary}</text>
