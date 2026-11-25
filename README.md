@@ -91,6 +91,7 @@ npm run check                                           # what CI runs before ev
 
 ## Notes for maintainers
 
+- **Brand colors:** the default accent is Indigo `#2A018A` from the Indigo Studio logo. Tool groups keep their own accents. The mark in the top bar is `public/logo-mark.svg` used as a CSS mask, so it takes the `--brand` color (light indigo `#B899FF` on the dark tools).
 - **Čistá mzda** (net salary) covers a standard employment contract in the Czech Republic for 2026. Check the rates and thresholds in `public/tools/app.js` before the next year.
 - **Převody měn** shows the date of the ECB reference rates it used. The ECB publishes them on working days.
 - **EXIF fotografií** reads and writes JPEG metadata without libraries ([`public/tools/exif.js`](public/tools/exif.js)) and copies the manufacturer's MakerNote unchanged.
